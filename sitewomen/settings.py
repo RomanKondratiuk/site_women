@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'women.appsWomenConfig',
+    'women.apps.WomenConfig',
 ]
 
 MIDDLEWARE = [
