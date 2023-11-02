@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.template.loader import render_to_string
 
 
 def page_not_found(request, exception):
@@ -9,7 +10,13 @@ def page_not_found(request, exception):
 
 
 def index(request):
-    return HttpResponse("This is page for women")
+    # template = render_to_string('women/index.html')   # 1й вариант
+    # return HttpResponse(template)                     # 1й вариант
+    return render(request, 'women/index.html')  # 2й вариант
+
+
+def about(request):
+    return render(request, 'women/about.html')
 
 
 def categories(request, category_id):
@@ -24,6 +31,6 @@ def categories_by_slug(request, category_slug):
 
 def archive(request, year):
     if year > 2023:
-        url = reverse('category_slug', args=('music', ))
+        url = reverse('category_slug', args=('music',))
         return redirect(url)  # return to home page
     return HttpResponse(f'<h1>Archive by years</h1><p>{year}</p>')
