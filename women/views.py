@@ -3,6 +3,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.template.loader import render_to_string
 
+menu = ["About his site", "Add article", "Feedback", "Sign in"]
+
+
+class MyClass:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
 
 def page_not_found(request, exception):
     """ function for not found pages """
@@ -10,13 +18,23 @@ def page_not_found(request, exception):
 
 
 def index(request):
+    data = {
+        'title': 'Main page',
+        'menu': menu,
+        'float': 34.33,
+        'list': [1, 3, 4, 'abc', False],
+        'set': {1, 4, 3, 2, 4},
+        'dict': {'key_1': 'value_1', 'key_2': 'value_2'},
+        'obj': MyClass(10, 20),
+    }
     # template = render_to_string('women/index.html')   # 1й вариант
     # return HttpResponse(template)                     # 1й вариант
-    return render(request, 'women/index.html')  # 2й вариант
+    return render(request, 'women/index.html', context=data)  # 2й вариант
 
 
 def about(request):
-    return render(request, 'women/about.html')
+    data = {'title': 'About this site'}
+    return render(request, 'women/about.html', data)
 
 
 def categories(request, category_id):
