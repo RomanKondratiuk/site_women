@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 def page_not_found(request, exception):
@@ -18,10 +19,11 @@ def categories(request, category_id):
 def categories_by_slug(request, category_slug):
     if request.GET:
         print(request.GET)
-    return HttpResponse(f'<h1>Articles by category</h1><p>id: {category_slug}</p>')
+    return HttpResponse(f'<h1>Articles by category</h1><p>slug: {category_slug}</p>')
 
 
 def archive(request, year):
     if year > 2023:
-        raise Http404()
+        url = reverse('category_slug', args=('music', ))
+        return redirect(url)  # return to home page
     return HttpResponse(f'<h1>Archive by years</h1><p>{year}</p>')
