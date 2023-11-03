@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.template.loader import render_to_string
+from django.template.defaultfilters import slugify
 
 menu = ["About his site", "Add article", "Feedback", "Sign in"]
 
@@ -19,13 +20,14 @@ def page_not_found(request, exception):
 
 def index(request):
     data = {
-        'title': 'Main page',
+        'title': 'main page',
         'menu': menu,
         'float': 34.33,
         'list': [1, 3, 4, 'abc', False],
         'set': {1, 4, 3, 2, 4},
         'dict': {'key_1': 'value_1', 'key_2': 'value_2'},
         'obj': MyClass(10, 20),
+        'url': slugify("Hi python, you are best"), # применение функции "slugify"
     }
     # template = render_to_string('women/index.html')   # 1й вариант
     # return HttpResponse(template)                     # 1й вариант

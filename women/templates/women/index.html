@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>{{ title|default:"No title" }}</title> <!--# filter default . 'main_title': 'main',-->
 </head>
 <body>
-<p>{{ menu }}</p>
-<p>{{ list }}</p>
-<p>{{ float }}</p>
+<p>{{ menu|join:" || " }}</p> <!--# filter 'last, first' -->
+<p>{{ list|length }}</p> <!--# filter 'length' -->
+<p>{{ float| add:'50' }}</p>  <!--# filter 'add' -->
 <p>{{ dict.key_1 }} {{ dict.key_2 }}</p>
 <p>{{ set }}</p>
 <p>{{ obj.a }}</p>
-<h1>{{ title }}</h1>
+<p>{{"The Main Page"|slugify}}</p> <!-- filter 'slugify'-->
+<p>{{ url }}</p>
+<h1>{{ title|cut:"a" }}</h1>  <!--# filter 'capfirst, upper, lower, cut:"a" ' -->
 </body>
 </html>
