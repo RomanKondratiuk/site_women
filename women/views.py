@@ -6,6 +6,12 @@ from django.template.defaultfilters import slugify
 
 menu = ["About his site", "Add article", "Feedback", "Sign in"]
 
+data_db = [
+    {'id': 1, 'category': 'car', 'title': 'bmw', 'year': 2022, 'in_stock': True},
+    {'id': 2, 'category': 'moto', 'title': 'yamaha', 'year': 2020, 'in_stock': False},
+    {'id': 3, 'category': 'boat', 'title': 'honda', 'year': 2010, 'in_stock': True}
+]
+
 
 class MyClass:
     def __init__(self, a, b):
@@ -20,14 +26,8 @@ def page_not_found(request, exception):
 
 def index(request):
     data = {
-        'title': 'main page',
-        'menu': menu,
-        'float': 34.33,
-        'list': [1, 3, 4, 'abc', False],
-        'set': {1, 4, 3, 2, 4},
-        'dict': {'key_1': 'value_1', 'key_2': 'value_2'},
-        'obj': MyClass(10, 20),
-        'url': slugify("Hi python, you are best"), # применение функции "slugify"
+        'title': 'Main Page',
+        'posts': data_db,
     }
     # template = render_to_string('women/index.html')   # 1й вариант
     # return HttpResponse(template)                     # 1й вариант

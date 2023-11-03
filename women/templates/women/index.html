@@ -5,14 +5,22 @@
     <title>{{ title|default:"No title" }}</title> <!--# filter default . 'main_title': 'main',-->
 </head>
 <body>
-<p>{{ menu|join:" || " }}</p> <!--# filter 'last, first' -->
-<p>{{ list|length }}</p> <!--# filter 'length' -->
-<p>{{ float| add:'50' }}</p>  <!--# filter 'add' -->
-<p>{{ dict.key_1 }} {{ dict.key_2 }}</p>
-<p>{{ set }}</p>
-<p>{{ obj.a }}</p>
-<p>{{"The Main Page"|slugify}}</p> <!-- filter 'slugify'-->
-<p>{{ url }}</p>
-<h1>{{ title|cut:"a" }}</h1>  <!--# filter 'capfirst, upper, lower, cut:"a" ' -->
+<h1>{{ title }}</h1>
+ <ul>
+     {% for p in posts %}
+     {% if p.in_stock %}
+     <li>
+         <h1>{{ p.category }}</h1>
+         <p>{{ p.id }}</p>
+         <p>{{ p.title }}</p>
+         <p>{{ p.year }}</p>
+         <p>{{ p.in_stock }}</p>
+         {% if not forloop.last %}
+         <hr>
+         {% endif %}
+     </li>
+     {% endif %}
+     {% endfor %}
+ </ul>
 </body>
 </html>
