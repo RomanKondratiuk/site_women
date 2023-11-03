@@ -5,22 +5,29 @@
     <title>{{ title|default:"No title" }}</title> <!--# filter default . 'main_title': 'main',-->
 </head>
 <body>
-<h1>{{ title }}</h1>
- <ul>
-     {% for p in posts %}
-     {% if p.in_stock %}
-     <li>
-         <h1>{{ p.category }}</h1>
-         <p>{{ p.id }}</p>
-         <p>{{ p.title }}</p>
-         <p>{{ p.year }}</p>
-         <p>{{ p.in_stock }}</p>
-         {% if not forloop.last %}
-         <hr>
-         {% endif %}
-     </li>
-     {% endif %}
-     {% endfor %}
- </ul>
+<ul>
+    <li><a href="{% url 'home' %}"> Home </a></li>
+    {% for m in menu %}
+    {% if not forloop.last%}<li>{% else %}<li class="last">{% endif %}
+        <a href="{% url m.url_name %}"> {{m.title}} </a>
+    </li>
+    {% endfor%}
+</ul>
+<ul>
+    {% for p in posts %}
+    {% if p.in_stock %}
+    <li>
+        <h1>{{ p.category }}</h1>
+        <h2><a href=" {% url 'post' p.id %} "> read post</a></h2>
+        <p>{{ p.title }}</p>
+        <p>{{ p.year }}</p>
+        <p>{{ p.in_stock }}</p>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
 </body>
 </html>

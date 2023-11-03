@@ -4,7 +4,11 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
 
-menu = ["About his site", "Add article", "Feedback", "Sign in"]
+menu = [{'title': "About his site", 'url_name': 'about'},
+        {'title': "Add page", 'url_name': 'addpage'},
+        {'title': "Feedback", 'url_name': 'contact'},
+        {'title': "Login", 'url_name': 'login'},
+        ]
 
 data_db = [
     {'id': 1, 'category': 'car', 'title': 'bmw', 'year': 2022, 'in_stock': True},
@@ -26,6 +30,7 @@ def page_not_found(request, exception):
 
 def index(request):
     data = {
+        'menu': menu,
         'title': 'Main Page',
         'posts': data_db,
     }
@@ -39,18 +44,17 @@ def about(request):
     return render(request, 'women/about.html', data)
 
 
-def categories(request, category_id):
-    return HttpResponse(f'<h1>Articles by category</h1><p>id: {category_id}</p>')
+def show_post(request, post_id):
+    return HttpResponse(f"View article with ID:{post_id}")
 
 
-def categories_by_slug(request, category_slug):
-    if request.GET:
-        print(request.GET)
-    return HttpResponse(f'<h1>Articles by category</h1><p>slug: {category_slug}</p>')
+def addpage(request):
+    return HttpResponse("Add page")
 
 
-def archive(request, year):
-    if year > 2023:
-        url = reverse('category_slug', args=('music',))
-        return redirect(url)  # return to home page
-    return HttpResponse(f'<h1>Archive by years</h1><p>{year}</p>')
+def contact(request):
+    return HttpResponse("Feedback")
+
+
+def login(request):
+    return HttpResponse("Log in")
