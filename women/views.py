@@ -41,7 +41,7 @@ def index(request):
 
 def about(request):
     data = {'title': 'About this site'}
-    return render(request, 'women/about.html', data)
+    return render(request, 'women/about.html', {'title': 'About this site', 'menu': menu})
 
 
 def show_post(request, post_id):

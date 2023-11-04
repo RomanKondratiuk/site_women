@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title|default:"No title" }}</title> <!--# filter default . 'main_title': 'main',-->
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'women/includes/nav.html' only %}
+
 <ul>
-    <li><a href="{% url 'home' %}"> Home </a></li>
-    {% for m in menu %}
-    {% if not forloop.last%}<li>{% else %}<li class="last">{% endif %}
-        <a href="{% url m.url_name %}"> {{m.title}} </a>
-    </li>
-    {% endfor%}
-</ul>
-<ul>
+    <h1>{{ title }}</h1>
     {% for p in posts %}
     {% if p.in_stock %}
     <li>
         <h1>{{ p.category }}</h1>
-        <h2><a href=" {% url 'post' p.id %} "> read post</a></h2>
+        <h4><a href=" {% url 'post' p.id %} "> read post</a></h4>
         <p>{{ p.title }}</p>
         <p>{{ p.year }}</p>
         <p>{{ p.in_stock }}</p>
@@ -29,5 +20,6 @@
     {% endif %}
     {% endfor %}
 </ul>
-</body>
-</html>
+{% include 'women/includes/nav.html'%}
+
+{% endblock %}
