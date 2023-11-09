@@ -26,6 +26,11 @@ data_db = [
     {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
 ]
 
+cats_db = [
+    {'id': 1, 'name': 'Актрисы'},
+    {'id': 2, 'name': 'Певицы'},
+    {'id': 3, 'name': 'Спортсменки'}
+]
 
 class MyClass:
     def __init__(self, a, b):
@@ -41,8 +46,9 @@ def page_not_found(request, exception):
 def index(request):
     data = {
         'menu': menu,
-        'title': 'Main Page',
+        'title': 'Отображение по рубрикам',
         'posts': data_db,
+        'cat_selected': 0,
     }
     # template = render_to_string('women/index.html')   # 1й вариант
     # return HttpResponse(template)                     # 1й вариант
@@ -68,3 +74,13 @@ def contact(request):
 
 def login(request):
     return HttpResponse("Log in")
+
+
+def show_category(request, cat_id):
+    data = {
+        'menu': menu,
+        'title': 'Main Page',
+        'posts': data_db,
+        'cat_selected': cat_id,
+    }
+    return render(request, 'women/index.html', context=data)
