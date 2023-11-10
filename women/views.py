@@ -1,8 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
+
+from women.models import Women
 
 menu = [{'title': "About his site", 'url_name': 'about'},
         {'title': "Add page", 'url_name': 'addpage'},
@@ -44,10 +46,11 @@ def page_not_found(request, exception):
 
 
 def index(request):
+    posts = Women.objects.filter(is_published=1)
     data = {
         'menu': menu,
         'title': 'Отображение по рубрикам',
-        'posts': data_db,
+        'posts': posts,
         'cat_selected': 0,
     }
     # template = render_to_string('women/index.html')   # 1й вариант
@@ -60,8 +63,17 @@ def about(request):
     return render(request, 'women/about.html', {'title': 'About this site', 'menu': menu})
 
 
-def show_post(request, post_id):
-    return HttpResponse(f"View article with ID:{post_id}")
+def show_post(request, post_slug):
+    post = get_object_or_404(Women, slug=post_slug)
+
+    data = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+        'cat_selected': 1,
+    }
+    return render(request, 'women/post.html', data)
+
 
 
 def addpage(request):
