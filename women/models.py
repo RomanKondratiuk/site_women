@@ -13,16 +13,17 @@ class Women(models.Model):
         DRAFT = 0, 'Черновик'
         PUBLISHED = 1, 'Опубликовано'
 
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    content = models.TextField(blank=True)
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
-    cat = models.ForeignKey(to='Category', on_delete=CASCADE, related_name='posts')
-    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
+    title = models.CharField(max_length=255, verbose_name='title')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='slug')
+    content = models.TextField(blank=True, verbose_name='content')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='time_create')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='time_update')
+    is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.DRAFT, verbose_name='is_published')
+    cat = models.ForeignKey(to='Category', on_delete=CASCADE, related_name='posts', verbose_name='category')
+    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags', verbose_name='tags')
     husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True,
-                                   blank=True, related_name='woman')
+                                   blank=True, related_name='woman', verbose_name='husband')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -43,8 +44,12 @@ class Women(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name='category_name')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='category_slug')
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
