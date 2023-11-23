@@ -27,3 +27,8 @@ urlpatterns = [
 ]
 
 # handler404 = page_not_found
+
+# заголовок админ панели
+admin.site.site_header = 'Панель админимтрирования(Рома)'
+
+admin.site.index_title = 'известные женщины мира'
